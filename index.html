@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PRC PDF Downloader</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>PRC and CPALE Results PDF Downloader</h1>
+      <p>Click on any range to download the PDF results.</p>
+
+      <div class="links">
+        <!-- PRC LET Result Ranges -->
+        <button
+          class="download-btn"
+          onclick="checkForPDF('https://www.prcboard.com/a-b-passers-september-2024-let-results-elementary')"
+        >
+          Check for A-B LET PDF
+        </button>
+        <button
+          class="download-btn"
+          onclick="checkForPDF('https://www.prcboard.com/c-d-passers-september-2024-let-results-elementary')"
+        >
+          Check for C-D LET PDF
+        </button>
+        <button
+          class="download-btn"
+          onclick="checkForPDF('https://www.prcboard.com/e-f-passers-september-2024-let-results-elementary')"
+        >
+          Check for E-F LET PDF
+        </button>
+        <!-- Add more buttons for other letter ranges -->
+      </div>
+
+      <h2>CPALE Results</h2>
+      <div class="links">
+        <!-- CPALE Result Ranges -->
+        <button
+          class="download-btn"
+          onclick="checkForPDF('https://www.prcboard.com/a-c-passers-cpale-results-december-2024')"
+        >
+          Check for A-C CPALE PDF
+        </button>
+        <button
+          class="download-btn"
+          onclick="checkForPDF('https://www.prcboard.com/d-f-passers-cpale-results-december-2024')"
+        >
+          Check for D-F CPALE PDF
+        </button>
+        <button
+          class="download-btn"
+          onclick="checkForPDF('https://www.prcboard.com/g-i-passers-cpale-results-december-2024')"
+        >
+          Check for G-I CPALE PDF
+        </button>
+        <button
+          class="download-btn"
+          onclick="checkForPDF('https://www.prcboard.com/j-l-passers-cpa-board-exam-results-december-2024')"
+        >
+          Check for J-L CPALE PDF
+        </button>
+        <button
+          class="download-btn"
+          onclick="checkForPDF('https://www.prcboard.com/m-o-passers-cpa-board-exam-results-december-2024')"
+        >
+          Check for M-O CPALE PDF
+        </button>
+        <button
+          class="download-btn"
+          onclick="checkForPDF('https://www.prcboard.com/p-r-passers-cpa-board-exam-results-december-2024')"
+        >
+          Check for P-R CPALE PDF
+        </button>
+        <button
+          class="download-btn"
+          onclick="checkForPDF('https://www.prcboard.com/s-u-passers-cpa-board-exam-results-december-2024')"
+        >
+          Check for S-U CPALE PDF
+        </button>
+        <button
+          class="download-btn"
+          onclick="checkForPDF('https://www.prcboard.com/v-z-passers-cpa-board-exam-results-december-2024')"
+        >
+          Check for V-Z CPALE PDF
+        </button>
+      </div>
+
+      <div id="status"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
