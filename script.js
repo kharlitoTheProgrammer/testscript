@@ -4,6 +4,10 @@ function checkForPDF(url) {
   document.getElementById("status").innerHTML =
     "Waiting for the PDF to be released...";
 
+  // Timeout for how long to wait for the PDF (in milliseconds)
+  const timeoutDuration = 60000; // 60 seconds
+  let isPDFFound = false;
+
   // Polling every 10 seconds to check if the PDF link appears
   const interval = setInterval(() => {
     fetch(url)
@@ -16,12 +20,25 @@ function checkForPDF(url) {
           document.getElementById("status").innerHTML =
             "PDF found! Downloading...";
           downloadPDF(pdfLink);
+          isPDFFound = true;
         }
       })
       .catch((error) => {
         console.error("Error checking for PDF:", error);
       });
   }, 10000); // Check every 10 seconds
+
+  // Set a timeout to stop the polling after a certain period and notify the user
+  setTimeout(() => {
+    if (!isPDFFound) {
+      clearInterval(interval); // Stop the polling
+      document.getElementById("status").innerHTML =
+        "PDF not yet available. Please check again later.";
+      alert(
+        "The PDF for this range is not yet available. Please check again later."
+      );
+    }
+  }, timeoutDuration); // Timeout after 60 seconds
 }
 
 // Function to download the PDF
