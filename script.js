@@ -5,7 +5,7 @@ function checkForPDF(url, buttonId) {
     "Waiting for the PDF to be released...";
 
   // Timeout for how long to wait for the PDF (in milliseconds)
-  const timeoutDuration = 10000; // 10 seconds
+  const timeoutDuration = 5000; // 5 seconds
   const checkInterval = 5000; // 5 seconds
   let isPDFFound = false;
   let remainingTime = timeoutDuration / 1000; // Convert to seconds
@@ -62,7 +62,9 @@ function checkForPDF(url, buttonId) {
       clearInterval(countdownInterval); // Stop the countdown
       document.getElementById("status").innerHTML =
         "PDF not yet available. Please check again later.";
-      alert("ala pa pong PDF, wait lang po tayo hehe");
+      alert(
+        "The PDF for this range is not yet available. Please check again later."
+      );
       // Re-enable the button
       document.getElementById(buttonId).disabled = false;
     }
