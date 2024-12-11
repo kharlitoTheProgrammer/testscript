@@ -1,14 +1,32 @@
 // Function to fetch and check the page for the PDF link
-function checkForPDF(url) {
+function checkForPDF(url, buttonId) {
   // Display status message
   document.getElementById("status").innerHTML =
     "Waiting for the PDF to be released...";
 
   // Timeout for how long to wait for the PDF (in milliseconds)
-  const timeoutDuration = 60000; // 60 seconds
+  const timeoutDuration = 10000; // 10 seconds
+  const checkInterval = 5000; // 5 seconds
   let isPDFFound = false;
+  let remainingTime = timeoutDuration / 1000; // Convert to seconds
 
-  // Polling every 10 seconds to check if the PDF link appears
+  // Disable the button while waiting for the result
+  document.getElementById(buttonId).disabled = true;
+
+  // Display the remaining time
+  const countdownInterval = setInterval(() => {
+    document.getElementById(
+      "status"
+    ).innerHTML = `Waiting for the PDF... ${remainingTime} seconds remaining`;
+
+    remainingTime--; // Decrease the remaining time by 1 second
+
+    if (remainingTime <= 0) {
+      clearInterval(countdownInterval); // Stop the countdown
+    }
+  }, 1000); // Update every 1 second
+
+  // Polling every 5 seconds to check if the PDF link appears
   const interval = setInterval(() => {
     fetch(url)
       .then((response) => response.text())
@@ -17,8 +35,17 @@ function checkForPDF(url) {
 
         if (pdfLink) {
           clearInterval(interval); // Stop the polling once the PDF is found
+          clearInterval(countdownInterval); // Stop the countdown
           document.getElementById("status").innerHTML =
             "PDF found! Downloading...";
+
+          // Update the button with the PDF link for future downloads
+          document.getElementById(buttonId).innerText = "Download PDF";
+          document.getElementById(buttonId).onclick = function () {
+            downloadPDF(pdfLink);
+          };
+
+          // Automatically download the PDF
           downloadPDF(pdfLink);
           isPDFFound = true;
         }
@@ -26,19 +53,20 @@ function checkForPDF(url) {
       .catch((error) => {
         console.error("Error checking for PDF:", error);
       });
-  }, 10000); // Check every 10 seconds
+  }, checkInterval); // Check every 5 seconds
 
   // Set a timeout to stop the polling after a certain period and notify the user
   setTimeout(() => {
     if (!isPDFFound) {
       clearInterval(interval); // Stop the polling
+      clearInterval(countdownInterval); // Stop the countdown
       document.getElementById("status").innerHTML =
         "PDF not yet available. Please check again later.";
-      alert(
-        "The PDF for this range is not yet available. Please check again later."
-      );
+      alert("ala pa pong PDF, wait lang po tayo hehe");
+      // Re-enable the button
+      document.getElementById(buttonId).disabled = false;
     }
-  }, timeoutDuration); // Timeout after 60 seconds
+  }, timeoutDuration); // Timeout after 30 seconds
 }
 
 // Function to download the PDF
@@ -56,11 +84,3 @@ function extractPDFLink(htmlContent) {
   const match = htmlContent.match(/href="([^"]+\.pdf)"/);
   return match ? match[1] : null;
 }
-
-// Example: Start checking when the page loads
-document.addEventListener("DOMContentLoaded", function () {
-  // Replace with any specific URL you want to monitor
-  const url =
-    "https://www.prcboard.com/a-b-passers-september-2024-let-results-elementary";
-  checkForPDF(url); // Start checking the page for the PDF
-});
